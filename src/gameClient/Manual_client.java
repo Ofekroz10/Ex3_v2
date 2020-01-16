@@ -42,6 +42,10 @@ public class Manual_client implements Runnable {
 	boolean finishInit = false;
 	Logger_KML kml;
 	int robotNum;
+	final int CASES = 24;
+	int[] mod = new int[CASES];
+	int[] allow_moves=new int[CASES];
+	
 
 	/**
 	 * constructor for client
@@ -52,6 +56,53 @@ public class Manual_client implements Runnable {
 
 	public Manual_client(int game_id, boolean authomatic) {
 		game = Game_Server.getServer(game_id);
+		allow_moves[0] = 290;
+		mod[0] = 2;
+		allow_moves[1] = 580;
+		mod[1] = 2;
+		allow_moves[2] = Integer.MAX_VALUE;
+		mod[2] = 2;
+		allow_moves[3] = 580;
+		mod[3] = 2;
+		allow_moves[4] = Integer.MAX_VALUE;
+		mod[4] = 2;
+		allow_moves[5] = 500;
+		mod[5] = 2;
+		for(int i= 6; i<9;i++)
+		{
+			allow_moves[i] = Integer.MAX_VALUE;
+			mod[i] = 1;
+		}
+		allow_moves[9] = 580;
+		mod[9] = 2;
+		allow_moves[10] = Integer.MAX_VALUE;
+		mod[10] = 2;
+		allow_moves[11] = 580;
+		mod[11] = 2;
+		allow_moves[12] = Integer.MAX_VALUE;
+		mod[12] = 2;
+		allow_moves[13] = 580;
+		mod[13] = 2;
+		allow_moves[14] = Integer.MAX_VALUE;
+		mod[14] = 2;
+		allow_moves[15] = Integer.MAX_VALUE;
+		mod[15] = 2;
+		allow_moves[16] = 290;
+		mod[16] = 2;
+		allow_moves[17] = Integer.MAX_VALUE;
+		mod[17] = 2;
+		allow_moves[18] = Integer.MAX_VALUE;
+		mod[18] = 2;
+		allow_moves[19] = 580;
+		mod[19] = 2;
+		allow_moves[20] = 290;
+		mod[20] = 2;
+		allow_moves[21] = Integer.MAX_VALUE;
+		mod[21] = 2;
+		allow_moves[22] = Integer.MAX_VALUE;
+		mod[22] = 2;
+		allow_moves[23] =1140;
+		mod[23] = 1;
 		this.authomatic = authomatic;
 		this.game_id = game_id;
 		graph = new DGraph();
@@ -125,7 +176,6 @@ public class Manual_client implements Runnable {
 
 		// draw gui
 		GraphicWin win = new GraphicWin(graph, this);
-		game.startGame();
 		finishInit = true;
 
 	}
@@ -368,7 +418,7 @@ public class Manual_client implements Runnable {
 
 					}
 				}
-				System.out.println(max_e.getSrc());
+				//System.out.println(max_e.getSrc());
 
 				rob.setSrc(max_e.getSrc());
 				Iterator<Fruit> f = fruitsAlgo.iterator();
@@ -409,9 +459,15 @@ public class Manual_client implements Runnable {
 			int j_op_b = 0;
 			Fruit f_op_b = null;
 			double plan_b_max_val = 0;
-			double best_move = 0;
+			double t_precent = 0.8;
+			double t_score = 0.2;
 			double sum_value = 0;
 			final double CONSTANT = 60;
+			if(game_id==3 ||game_id==9)
+			{
+				t_score = 0.1;
+				t_precent = 0.9;
+			}
 			List<node_data> optionB = null;
 			int i = 0;
 			while (!found) {
@@ -443,7 +499,7 @@ public class Manual_client implements Runnable {
 						double time = calcTime(steps, robot.getSpeed());
 						boolean closer = true;
 						if (time > 0) {
-							sum_value = (CONSTANT / time) * 0.8 + (0.2 * f.getValue());
+							sum_value = (CONSTANT / time) * t_precent + (t_score * f.getValue());
 							if (plan_b_max_val < sum_value) {
 								plan_b_max_val = sum_value;
 								optionB = steps;
@@ -586,11 +642,11 @@ public class Manual_client implements Runnable {
 	public void run() {
 		int count = 0;
 		int countMove = 0;
-		int sleep = 50;
-		game.startGame();
+		int sleep = 52;
 		try {
 			while (finishInit)
 				Thread.sleep(10);
+			game.startGame(); //9  3 16
 			while (game.isRunning()) {
 				if (!authomatic) {
 					game.move();
@@ -611,7 +667,7 @@ public class Manual_client implements Runnable {
 					}
 				} else {
 					setDestToAllRobots();
-					if (count % 2 == 0) {
+					if (count % mod[game_id] == 0 && allow_moves[game_id] >countMove) {
 						game.move();
 						countMove++;
 					}
@@ -640,7 +696,16 @@ public class Manual_client implements Runnable {
 			e.printStackTrace();
 			return;
 		}
-		System.out.println("Moves: " + countMove);
+		try {
+			score = readResult(game.toString());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.print("Stage: "+game_id+" ");
+		System.out.print("Moves: " + countMove+ " ");
+		System.out.println("Score: "+score);
+		
 
 	}
 
