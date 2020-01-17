@@ -5,6 +5,14 @@ import dataStructure.edge_data;
 import gameClient.game_obj;
 import utils.Point3D;
 
+/**
+ * This class represent a fruit
+
+ * @author ofekroz
+ *
+ */
+
+
 public class Fruit implements game_obj
 {
 	static int cur_id =0;
@@ -29,6 +37,16 @@ public class Fruit implements game_obj
 		belong_robot = false;
 		this.edge = edge;
 	}
+	
+	public Fruit()
+	{
+		
+	}
+	
+	/**
+	 * getters and setters
+	 * @return
+	 */
 
 	public boolean isBelong_robot() {
 		return belong_robot;
@@ -108,6 +126,19 @@ public class Fruit implements game_obj
 	public int getId()
 	{
 		return id;
+	}
+	
+	public int getSrcByType()
+	{
+		if(type == 1)
+			return edge.getSrc();
+		return edge.getDest();
+	}
+	public int getDestByType()
+	{
+		if(type == 1)
+			return edge.getDest();
+		return edge.getSrc();
 	}
 	
 	@Override

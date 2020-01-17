@@ -1,9 +1,29 @@
 package game_objects;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import utils.Point3D;
+
+/**
+ * This class represent a robot, robot contains:
+ * destination- the destination vertex to move
+ * src- the current vertex
+ * id- the id of the robot
+ * speed- speed of robot
+ * pos- the position of the robot
+ * @author ofekroz
+ *
+ */
 
 public class Robot
 {
+	/** getters and setters
+	 * 
+	 * @return
+	 */
+	
+	
 	public int getDest() {
 		return dest;
 	}
@@ -59,6 +79,29 @@ public class Robot
 	double speed;
 	Point3D pos;
 	double value;
+	
+	public void initRobot(String s) throws JSONException {
+		JSONObject robot1 = new JSONObject(s);
+		JSONObject robot = robot1.getJSONObject("Robot");
+
+		// read the robot
+
+		int id = (Integer) robot.get("id");
+		String pos = (String) robot.get("pos");
+		String[] cordinates = pos.split(",");
+		Point3D p = new Point3D(Double.valueOf(cordinates[0]), Double.valueOf(cordinates[1]), 0);
+		double value = (Double) robot.get("value");
+		double speed = (Double) robot.get("speed");
+		int dest = (Integer) robot.get("dest");
+		int src = (Integer) robot.get("src");
+		this.id = id;
+		this.pos = p;
+		this.value=value;
+		this.speed=speed;
+		this.dest=dest;
+		this.src=src;
+
+	}
 	
 	
 }

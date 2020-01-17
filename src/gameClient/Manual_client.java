@@ -56,6 +56,25 @@ public class Manual_client implements Runnable {
 
 	public Manual_client(int game_id, boolean authomatic) {
 		game = Game_Server.getServer(game_id);
+		init_Mod_allow_moves();
+		this.authomatic = authomatic;
+		this.game_id = game_id;
+		graph = new DGraph();
+		robots = new LinkedList<>();
+		edges = new LinkedList<>();
+		gAlgo = new Graph_Algo();
+		score_by_edge = new HashMap<edge_data, Double>();
+		fruit_by_edge = new HashMap<>();
+		kml = new Logger_KML(game_id, "kml_stage_" + game_id);
+		init();
+
+	}
+	// game.startGame()
+	// game is running
+	/**
+	 * This method init mod array and allow_moves array for ex4
+	 */
+	private void init_Mod_allow_moves() {
 		allow_moves[0] = 290;
 		mod[0] = 2;
 		allow_moves[1] = 580;
@@ -103,20 +122,8 @@ public class Manual_client implements Runnable {
 		mod[22] = 2;
 		allow_moves[23] =1140;
 		mod[23] = 1;
-		this.authomatic = authomatic;
-		this.game_id = game_id;
-		graph = new DGraph();
-		robots = new LinkedList<>();
-		edges = new LinkedList<>();
-		gAlgo = new Graph_Algo();
-		score_by_edge = new HashMap<edge_data, Double>();
-		fruit_by_edge = new HashMap<>();
-		kml = new Logger_KML(game_id, "kml_stage_" + game_id);
-		init();
-
+		
 	}
-	// game.startGame()
-	// game is running
 
 	public void setGraphicWin(GraphicWin w) {
 		this.win = w;
@@ -436,11 +443,11 @@ public class Manual_client implements Runnable {
 
 	/**
 	 * the algorithm for moving robots
+	 * calculate by a formula dependence on distance, and value.
 	 */
 
 	private void setDestToAllRobots() {
 		LinkedList<Fruit> fruitsAlgo = new LinkedList<>();
-		LinkedList<Robot> robotAlgo = new LinkedList<>();
 		synchronized (fruits) {
 			update_fruits_list();
 			for (Fruit f : fruits) {
@@ -449,13 +456,11 @@ public class Manual_client implements Runnable {
 		}
 		fruitsAlgo.sort(new FruitComperator());
 		synchronized (robots) {
-			for (Robot r : robots) {
-				robotAlgo.add(r);
-			}
+			update_robot_list();
 		}
 
-		for (Robot robot : robotAlgo) {
-			boolean found = false;
+		for (Robot robot : robots) {
+			boolean found = false; 
 			int j_op_b = 0;
 			Fruit f_op_b = null;
 			double plan_b_max_val = 0;
@@ -477,14 +482,9 @@ public class Manual_client implements Runnable {
 				if (!f.isBelong_robot()) {
 					LinkedList<Integer> vertices = new LinkedList<>();
 					vertices.add(robot.getSrc()); // root->1 before fruit->fruit
-					if (f.getType() == 1) {
-						vertices.add(f.getEdge().getSrc());
-						vertices.add(f.getEdge().getDest());
-					} else {
-						vertices.add(f.getEdge().getDest());
-						vertices.add(f.getEdge().getSrc());
-					}
-
+					vertices.add(f.getSrcByType());
+					vertices.add(f.getDestByType());
+					
 					LinkedList<node_data> steps = (LinkedList<node_data>) gAlgo.shortestPath(vertices.get(0),
 							vertices.get(1));
 
@@ -497,24 +497,12 @@ public class Manual_client implements Runnable {
 					steps.add(graph.getNode(vertices.get(2)));
 					if (steps.size() > 1) {
 						double time = calcTime(steps, robot.getSpeed());
-						boolean closer = true;
-						if (time > 0) {
-							sum_value = (CONSTANT / time) * t_precent + (t_score * f.getValue());
-							if (plan_b_max_val < sum_value) {
-								plan_b_max_val = sum_value;
-								optionB = steps;
-								j_op_b = j; //index for starting the path 
-								f_op_b = f;
-							}
-							closer = false;
-						}
-						if (closer) {
-							node_data ver = steps.get(j);
-							robot.setDest(ver.getKey());
-							f.setBelong_robot(true);
-							game.chooseNextEdge(robot.getId(), robot.getDest());
-
-							found = true; // 2 to the same , move to cur.
+						sum_value = (CONSTANT / time) * t_precent + (t_score * f.getValue());
+						if (plan_b_max_val < sum_value) {
+							plan_b_max_val = sum_value;
+							optionB = steps;
+							j_op_b = j; //index for starting the path 
+							f_op_b = f;
 						}
 					}
 				}

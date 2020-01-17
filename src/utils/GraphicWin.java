@@ -407,12 +407,19 @@ public class GraphicWin extends JFrame implements ActionListener,MouseListener,K
 	
 	public Point3D scalePoint(Point3D p)
 	{
+		try {
 		if(p != null)
 		{
 		Point3D temp = new Point3D(scale(p.x(),range[0].get_min(),range[0].get_max(),50,this.getWidth()-50),scale(p.y(),range[1].get_min(),range[1].get_max(),250,this.getHeight()-70));
 		return temp;
 		}
 		return null;
+		}
+		
+		catch(NullPointerException e)
+		{
+			return null;
+		}
 	}
 	private double scale(double data, double r_min, double r_max, 
 			double t_min, double t_max)
