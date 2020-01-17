@@ -206,18 +206,19 @@ public class GraphicWin extends JFrame implements ActionListener,MouseListener,K
 					 //graphics.drawString(String.valueOf(curE.getWeight()), (int)((p.x()+dest.x())/2),(int)((p.y()+dest.y())/2));
 					 //draw the direction
 					 Point3D dir = p;
-
+					 
+					 
 					 g2d.setColor(Color.BLUE);
 					 g2d.fillOval(dir.ix(), dir.iy(), SIZEOFNODE,SIZEOFNODE);
 					 
-					 Point3D direction = scalePoint(new Point3D((int)((p.x()+dest.x())/2),(int)((p.y()+dest.y())/2)));
+					 Point3D direction = new Point3D((int)((p.x()+dest.x())/2),(int)((p.y()+dest.y())/2));
 						
 					 for(int i =0; i<3;i++)
 					 {
-						 direction = new Point3D((int)((dir.x()+p.x())/2),(int)((dir.y()+p.y())/2));
+						 direction = new Point3D((int)((direction.x()+p.x())/2),(int)((direction.y()+p.y())/2));
 					 }
 					 g2d.setColor(Color.ORANGE);
-					 g2d.fillOval(dir.ix(), dir.iy(), SIZEOFNODE, SIZEOFNODE);
+					 g2d.fillOval(direction.ix(), direction.iy(), SIZEOFNODE, SIZEOFNODE);
 			}
 				 //draw fruits:
 				 synchronized(client.getFruits())
