@@ -73,7 +73,7 @@ public class GraphicWin extends JFrame implements ActionListener,MouseListener,K
 	final int SIZEOFROBOT = 12;
 	final int SIZEOFNODE = 7;
 	final int APPLE = 1;
-	int counter =100;
+	int counter =30;
 
 	
 	
@@ -228,14 +228,17 @@ public class GraphicWin extends JFrame implements ActionListener,MouseListener,K
 					String type = "banana";
 					g2d.setColor(Color.yellow);
 					if(f.getType()==APPLE)
-						g2d.setColor(Color.green);           
+					{
+						type="apple";
+						g2d.setColor(Color.green);  
+					}
 			  
 			          Shape fruit= new Arc2D.Double(loc.x(),loc.y()-10,20,20,0,360,Arc2D.CHORD);
 			          g2d.fill(fruit);
 			          g2d.setColor(Color.cyan);
 			          g2d.drawString(String.valueOf(f.getValue()), loc.ix(), loc.iy());
 			          if(counter ==0)
-			          client.getKML().addPlaceMark("fruit", f.getPos().toString());
+			          client.getKML().addFruitPlaceMark(type, f.getPos().toString());
 					
 				}}
 
@@ -252,12 +255,12 @@ public class GraphicWin extends JFrame implements ActionListener,MouseListener,K
 					 Shape dot= new Arc2D.Double(loc.x(),loc.y(),SIZEOFROBOT,SIZEOFROBOT,0,360,Arc2D.CHORD);
 			            g2d.fill(dot);
 			            if(counter ==0)
-			            client.getKML().addPlaceMark("robot", r.getPos().toString());
+			            client.getKML().addRobotPlaceMark(r.getPos().toString());
 			         i++;
 
 				 }
 				 if(counter ==0)
-					 counter=100;
+					 counter=30;
 				 else
 					 counter--;
 					}

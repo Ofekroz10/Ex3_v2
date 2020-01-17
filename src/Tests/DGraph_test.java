@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;

@@ -14,16 +14,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import gameClient.Logger_KML;
 
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class KML_LoggerTest {
 	static Logger_KML log;
 	static final double EPS = 0.00001;
-	static final String FILE_NAME = "TEST";
+	static final String FILE_NAME = "JUNIT_TEST";
 
 	@BeforeAll
 	static void createKMLFile() {
-		log = new Logger_KML(100, FILE_NAME);
+		log = new Logger_KML(FILE_NAME);
 	}
 
 	@Test
@@ -46,7 +45,7 @@ public class KML_LoggerTest {
 		for (int i = 1; i <= 3; i++) {
 			lang = lang + EPS;
 			lat = lat + EPS * EPS;
-			log.addPlaceMark("robot",lang + "," + lat + ",0.0");
+			log.addRobotPlaceMark(lang + "," + lat + ",0.0");
 		}
 	}
 
@@ -58,7 +57,7 @@ public class KML_LoggerTest {
 		for (int i = 1; i <= 100; i++) {
 			lang = lang + EPS;
 			lat = lat + EPS * EPS;
-			log.addPlaceMark("fruit", lang + "," + lat + ",0.0");
+			log.addFruitPlaceMark(i % 2 == 0 ? "apple" : "banana", lang + "," + lat + ",0.0");
 		}
 	}
 

@@ -65,7 +65,7 @@ public class Manual_client implements Runnable {
 		gAlgo = new Graph_Algo();
 		score_by_edge = new HashMap<edge_data, Double>();
 		fruit_by_edge = new HashMap<>();
-		kml = new Logger_KML(game_id, "kml_stage_" + game_id);
+		kml = new Logger_KML(""+game_id);
 		init();
 
 	}
@@ -654,7 +654,9 @@ public class Manual_client implements Runnable {
 						e.printStackTrace();
 					}
 				} else {
+					try {
 					setDestToAllRobots();
+					
 					if (count % mod[game_id] == 0 && allow_moves[game_id] >countMove) {
 						game.move();
 						countMove++;
@@ -675,6 +677,10 @@ public class Manual_client implements Runnable {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					}
+					catch(NullPointerException e){
+						
+					}	
 				}
 
 			}
