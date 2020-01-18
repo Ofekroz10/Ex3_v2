@@ -657,7 +657,7 @@ public class Manual_client implements Runnable {
 					try {
 					setDestToAllRobots();
 					
-					if (count % mod[game_id] == 0 && allow_moves[game_id] >countMove) {
+					if (count % mod[game_id] == 0 ) {
 						game.move();
 						countMove++;
 					}
