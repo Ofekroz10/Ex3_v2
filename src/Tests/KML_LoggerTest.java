@@ -12,17 +12,17 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import gameClient.Logger_KML;
+import gameClient.KML_Logger;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class KML_LoggerTest {
-	static Logger_KML log;
+	static KML_Logger log;
 	static final double EPS = 0.00001;
 	static final String FILE_NAME = "JUNIT_TEST";
 
 	@BeforeAll
 	static void createKMLFile() {
-		log = new Logger_KML(FILE_NAME);
+		log = new KML_Logger(FILE_NAME);
 	}
 
 	@Test

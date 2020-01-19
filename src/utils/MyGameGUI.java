@@ -57,7 +57,7 @@ import game_objects.Fruit;
 import game_objects.GameState;
 import game_objects.Robot;
 
-public class GraphicWin extends JFrame implements ActionListener,MouseListener,KeyListener, Runnable
+public class MyGameGUI extends JFrame implements ActionListener,MouseListener,KeyListener, Runnable
 {
 	
 	Color[] robColors= new Color[5];
@@ -85,7 +85,7 @@ public class GraphicWin extends JFrame implements ActionListener,MouseListener,K
 	 */
 
 	
-	public GraphicWin(graph g,Manual_client client)
+	public MyGameGUI(graph g,Manual_client client)
 	{
 		robColors[0] = Color.cyan;
 		robColors[1] = Color.gray;

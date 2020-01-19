@@ -12,7 +12,7 @@ import dataStructure.node_data;
 import game_objects.Fruit;
 import game_objects.GameState;
 import game_objects.Robot;
-import utils.GraphicWin;
+import utils.MyGameGUI;
 import utils.Point3D;
 import utils.Range;
 
@@ -36,11 +36,11 @@ public class Manual_client implements Runnable {
 	HashMap<edge_data, Double> score_by_edge;
 	double score;
 	HashMap<edge_data, LinkedList<Fruit>> fruit_by_edge;
-	GraphicWin win;
+	MyGameGUI win;
 	boolean authomatic;
 	graph_algorithms gAlgo;
 	boolean finishInit = false;
-	Logger_KML kml;
+	KML_Logger kml;
 	int robotNum;
 	final int CASES = 24;
 	int[] mod = new int[CASES];
@@ -65,7 +65,7 @@ public class Manual_client implements Runnable {
 		gAlgo = new Graph_Algo();
 		score_by_edge = new HashMap<edge_data, Double>();
 		fruit_by_edge = new HashMap<>();
-		kml = new Logger_KML(""+game_id);
+		kml = new KML_Logger(""+game_id);
 		init();
 
 	}
@@ -125,7 +125,7 @@ public class Manual_client implements Runnable {
 		
 	}
 
-	public void setGraphicWin(GraphicWin w) {
+	public void setGraphicWin(MyGameGUI w) {
 		this.win = w;
 	}
 
@@ -182,7 +182,7 @@ public class Manual_client implements Runnable {
 		}
 
 		// draw gui
-		GraphicWin win = new GraphicWin(graph, this);
+		MyGameGUI win = new MyGameGUI(graph, this);
 		finishInit = true;
 
 	}
@@ -333,7 +333,7 @@ public class Manual_client implements Runnable {
 
 	}
 
-	public Logger_KML getKML() {
+	public KML_Logger getKML() {
 		return kml;
 	}
 
@@ -448,16 +448,12 @@ public class Manual_client implements Runnable {
 
 	private void setDestToAllRobots() {
 		LinkedList<Fruit> fruitsAlgo = new LinkedList<>();
-		synchronized (fruits) {
-			update_fruits_list();
 			for (Fruit f : fruits) {
 				fruitsAlgo.add(f);
 			}
-		}
+		
 		fruitsAlgo.sort(new FruitComperator());
-		synchronized (robots) {
-			update_robot_list();
-		}
+
 
 		for (Robot robot : robots) {
 			boolean found = false; 

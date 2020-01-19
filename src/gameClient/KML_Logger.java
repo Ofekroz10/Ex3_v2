@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
-public class Logger_KML {
+public class KML_Logger {
 	private String name;
 	private StringBuilder content;
 
@@ -18,7 +18,7 @@ public class Logger_KML {
 	 * Constructor to create the begining of the kml file
 	 * @param name
 	 */
-	public Logger_KML(String name) {
+	public KML_Logger(String name) {
 		this.name = name;
 		content = new StringBuilder();
 		content.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
