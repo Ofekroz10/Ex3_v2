@@ -52,12 +52,13 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import gameClient.Manual_client;
+import gameClient.SimpleDB;
 import gameClient.StartClass;
 import game_objects.Fruit;
 import game_objects.GameState;
 import game_objects.Robot;
 
-public class MyGameGUI extends JFrame implements ActionListener,MouseListener,KeyListener, Runnable
+public class GraphicWin extends JFrame implements ActionListener,MouseListener,KeyListener, Runnable
 {
 	
 	Color[] robColors= new Color[5];
@@ -85,7 +86,7 @@ public class MyGameGUI extends JFrame implements ActionListener,MouseListener,Ke
 	 */
 
 	
-	public MyGameGUI(graph g,Manual_client client)
+	public GraphicWin(graph g,Manual_client client)
 	{
 		robColors[0] = Color.cyan;
 		robColors[1] = Color.gray;
@@ -221,9 +222,11 @@ public class MyGameGUI extends JFrame implements ActionListener,MouseListener,Ke
 					 g2d.fillOval(direction.ix(), direction.iy(), SIZEOFNODE, SIZEOFNODE);
 			}
 				 //draw fruits:
+				 List<Fruit> fruits = null;
 				 synchronized(client.getFruits())
 				 {
-				 List<Fruit> fruits = client.getFruits();
+				 fruits= client.getFruits();
+				 }
 				 for (Fruit f : fruits) {
 					Point3D loc = scalePoint(f.getPos());
 					String type = "banana";
@@ -233,6 +236,7 @@ public class MyGameGUI extends JFrame implements ActionListener,MouseListener,Ke
 						type="apple";
 						g2d.setColor(Color.green);  
 					}
+					
 			  
 			          Shape fruit= new Arc2D.Double(loc.x(),loc.y()-10,20,20,0,360,Arc2D.CHORD);
 			          g2d.fill(fruit);
@@ -241,12 +245,15 @@ public class MyGameGUI extends JFrame implements ActionListener,MouseListener,Ke
 			          if(counter ==0)
 			          client.getKML().addFruitPlaceMark(type, f.getPos().toString());
 					
-				}}
+				}
 
 				 int i=0;
 				 //Draw robots
+				 List<Robot> robots_lst=null;
 				 synchronized (client.getRobots())
 					{
+					 robots_lst = client.getRobots();
+					}
 					 //System.out.println("manual.getRobots().size(): " +client.getRobots().size());
 				 for(Robot r: robots)
 				 {
@@ -266,13 +273,28 @@ public class MyGameGUI extends JFrame implements ActionListener,MouseListener,Ke
 					 counter--;
 					}
 				 
-				 	
+		g2d.setColor(Color.BLACK); 	
 			
 		}
-		g2d.setColor(Color.BLACK);
-
 		
+	/**
+	 * export kml to db
+	 */
+	
+	
+	private void exportKML() {
+		try {
+			int reply = JOptionPane.showConfirmDialog(null, "You want to export KML log?", "Export kml log",
+					JOptionPane.YES_NO_OPTION);
+			if (reply == JOptionPane.YES_OPTION) {
+				
+			}
+
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
 	}
+	
 	
 	/**
 	 * setter to graph
@@ -476,6 +498,7 @@ public class MyGameGUI extends JFrame implements ActionListener,MouseListener,Ke
 				break;
 		}
 		showResult();
+		showSQL();
 		StartClass s = new StartClass();
 		try {
 		s.main(null);
@@ -487,6 +510,20 @@ public class MyGameGUI extends JFrame implements ActionListener,MouseListener,Ke
 		dispose();
 		
 		
+	}
+
+	private void showSQL() {
+		String s = "";
+		s+="You played in "+client.get_gameID()+ " "+SimpleDB.numOfGameInStage(client.get_gameID())+" times \n";
+		s+="You played ";
+		s+= ""+SimpleDB.numOfGame() +" games \n\n";
+		System.out.println(client.get_allow_moves(client.get_gameID()));
+		s+="Your rank is "+SimpleDB.rankByStage_2(client.get_gameID(), (int)client.get_score(),client.get_allow_moves(client.get_gameID()));
+		s += "Your highest score: \n";
+		s+= SimpleDB.getBestScore();
+		
+		
+		infoBox(s,"RESULT");
 	}
 
 	public void showResult() {
