@@ -45,10 +45,15 @@ Manual_client client =new Manual_client(level,authomatic); // level = [0,23], tr
 **<h3>How to play manual</h3>**
 
 
-[![http://pluspng.com/img-png/click-here-png-click-here-icon-png-360.png](http://img.youtube.com/vi/v=HBQX07BRlMg/0.jpg)](http://www.youtube.com/watch?v=HBQX07BRlMg)
+[![Click here to see the video](http://img.youtube.com/vi/v=HBQX07BRlMg/0.jpg)](http://www.youtube.com/watch?v=HBQX07BRlMg)
 
 
 
+**<h3>How to see the data from the DB ?</h3>**
+<hr>
+
+When you complete a stage you will see authomaticly the results from the data base:
+<img src="https://ibb.co/HHg2mzy"/><br /><br/>
 
 <h3>Examples</h3>
 <hr>
@@ -70,3 +75,5 @@ Robot r = new Robot();
 String json = "{"Robot":{"pos":"","value":"","id":"","src":"","dest":"","speed":""}}";
 r.initRobot(json);
 ```
+
+
