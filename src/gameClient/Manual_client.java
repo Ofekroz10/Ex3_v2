@@ -43,8 +43,7 @@ public class Manual_client implements Runnable {
 	Logger_KML kml;
 	int robotNum;
 	final int CASES = 24;
-	int[] mod = new int[CASES];
-	int[] allow_moves=new int[CASES];
+
 
 	
 	
@@ -59,7 +58,6 @@ public class Manual_client implements Runnable {
 	public Manual_client(int game_id, boolean authomatic) {
 		Game_Server.login(209373208);
 		game = Game_Server.getServer(game_id);
-		init_Mod_allow_moves();
 		this.authomatic = authomatic;
 		
 		this.game_id = game_id;
@@ -75,60 +73,6 @@ public class Manual_client implements Runnable {
 	}
 	// game.startGame()
 	// game is running
-	/**
-	 * This method init mod array and allow_moves array for ex4
-	 */
-	private void init_Mod_allow_moves() {
-		allow_moves[0] = 290;
-		mod[0] = 30;
-		allow_moves[1] = 580;
-		mod[1] = 9;
-		allow_moves[2] = Integer.MAX_VALUE;
-		mod[2] = 2;
-		allow_moves[3] = 580;
-		mod[3] = 20;
-		allow_moves[4] = Integer.MAX_VALUE;
-		mod[4] = 2;
-		allow_moves[5] = 500;
-		mod[5] = 10;
-		for(int i= 6; i<9;i++)
-		{
-			allow_moves[i] = Integer.MAX_VALUE;
-			mod[i] = 1;
-		}
-		allow_moves[9] = 580;
-		mod[9] = 10;
-		allow_moves[10] = Integer.MAX_VALUE;
-		mod[10] = 2;
-		allow_moves[11] = 580;
-		mod[11] = 10;
-		allow_moves[12] = Integer.MAX_VALUE;
-		mod[12] = 2;
-		allow_moves[13] = 580;
-		mod[13] = 10;
-		allow_moves[14] = Integer.MAX_VALUE;
-		mod[14] = 2;
-		allow_moves[15] = Integer.MAX_VALUE;
-		mod[15] = 2;
-		allow_moves[16] = 290;
-		mod[16] = 10;
-		allow_moves[17] = Integer.MAX_VALUE;
-		mod[17] = 2;
-		allow_moves[18] = Integer.MAX_VALUE;
-		mod[18] = 2;
-		allow_moves[19] = 580;
-		mod[19] = 20;
-		allow_moves[20] = 290;
-		mod[20] = 20;
-		allow_moves[21] = Integer.MAX_VALUE;
-		mod[21] = 2;
-		allow_moves[22] = Integer.MAX_VALUE;
-		mod[22] = 2;
-		allow_moves[23] =1140;
-		mod[23] = 15;
-		
-	}
-	
 
 	
 	
@@ -625,21 +569,6 @@ public class Manual_client implements Runnable {
 		int count = 0;
 		int countMove = 0;
 		int sleep = 10; //3->5
-
-		if(game_id==0)
-			sleep=3;
-		else if(game_id==9)
-			sleep=10;
-		else if(game_id==13)
-			sleep=10;
-		else if(game_id==3 )
-			sleep=5;
-		else if(game_id==19)
-			sleep = 5;
-		else if(game_id==20)
-			sleep=5;
-		else if(game_id==23)
-			sleep = 4;
 		try {
 			
 			game.startGame(); //9  3 16
@@ -664,14 +593,11 @@ public class Manual_client implements Runnable {
 				} else {
 					try {
 						setDestToAllRobots();
-					
-					if (count % mod[game_id] == 0 && allow_moves[game_id] >countMove) {
 						game.move();
-						
 						update_robot_list();
 						update_fruits_list();
 						countMove++;
-					}
+						
 					count++;
 					String result = game.toString();
 					try {
@@ -755,8 +681,6 @@ public class Manual_client implements Runnable {
 	{
 		return this.game_id;
 	}
-	public int get_allow_moves(int get_gameID) {
-		return allow_moves[get_gameID];
-	}
+
 
 }
