@@ -53,7 +53,7 @@ Manual_client client =new Manual_client(level,authomatic); // level = [0,23], tr
 <hr>
 
 When you complete a stage you will see authomaticly the results from the data base:
-<img src="https://ibb.co/HHg2mzy"/><br /><br/>
+<a href="https://ibb.co/HHg2mzy"><img src="https://i.ibb.co/HHg2mzy/result.png" alt="result" border="0"></a>
 
 <h3>Examples</h3>
 <hr>
