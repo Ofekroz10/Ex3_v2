@@ -45,7 +45,7 @@ Manual_client client =new Manual_client(level,authomatic); // level = [0,23], tr
 **<h3>How to play manual</h3>**
 
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/v=HBQX07BRlMg/0.jpg)](http://www.youtube.com/watch?v=HBQX07BRlMg)
+[![http://pluspng.com/img-png/click-here-png-click-here-icon-png-360.png](http://img.youtube.com/vi/v=HBQX07BRlMg/0.jpg)](http://www.youtube.com/watch?v=HBQX07BRlMg)
 
 
 
