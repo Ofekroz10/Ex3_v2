@@ -513,12 +513,13 @@ public class GraphicWin extends JFrame implements ActionListener,MouseListener,K
 	}
 
 	private void showSQL() {
+		final int MAX_MOVE  =100000;
 		String s = "";
 		s+="You played in "+client.get_gameID()+ " "+SimpleDB.numOfGameInStage(client.get_gameID())+" times \n";
 		s+="You played ";
 		s+= ""+SimpleDB.numOfGame() +" games \n\n";
-		System.out.println(client.get_allow_moves(client.get_gameID()));
-		s+="Your rank is "+SimpleDB.rankByStage_2(client.get_gameID(), (int)client.get_score(),client.get_allow_moves(client.get_gameID()));
+	
+		s+="Your rank is "+SimpleDB.rankByStage_2(client.get_gameID(), (int)client.get_score(),MAX_MOVE);
 		s += "Your highest score: \n";
 		s+= SimpleDB.getBestScore();
 		
