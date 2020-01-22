@@ -52,7 +52,7 @@ Manual_client client =new Manual_client(level,authomatic); // level = [0,23], tr
 **<h3>How to see the data from the DB ?</h3>**
 <hr>
 
-When you complete a stage you will see authomaticly the results from the data base:
+When you complete a stage you will see authomaticly the results from the data base: <br>
 <a href="https://ibb.co/HHg2mzy"><img src="https://i.ibb.co/HHg2mzy/result.png" alt="result" border="0"></a>
 
 <h3>Examples</h3>
